@@ -2,6 +2,6 @@
 
 int main(int argc, char **argv)
 {
-	std::cout << "Hello World\n";
+	std::cout << "1 + 3 = " << 4 <<  std::endl;
 	return 0;
 }
