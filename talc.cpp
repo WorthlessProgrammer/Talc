@@ -15,17 +15,17 @@ enum Op {
 
 class Expression
 {
-	private:
-		std::vector<int> operands;
-		char operation;
-	
-	public:
-		Expression(int op1, int op2, char optr)
-		{
-			operands.push_back(op1);
-			operands.push_back(op2);
-			operation = optr;
-		}
+  private:
+    std::vector<int> operands;
+    char operation;
+
+  public:
+    Expression(int op1, int op2, char optr)
+    {
+      operands.push_back(op1);
+      operands.push_back(op2);
+      operation = optr;
+    }
 
     void evalExpr()
     {
@@ -50,20 +50,20 @@ class Expression
       }
 
       std::cout << operands[0] << ' ' << operation << ' ' << operands[1] 
-                << " = " << result << std::endl; 
+      << " = " << result << std::endl; 
     }
 
-		void print_t()
-		{
-			for (int i: operands)
-				std::cout << i << '\n';
-			std::cout << operation << std::endl;
-		}
+    void print_t()
+    {
+      for (int i: operands)
+        std::cout << i << '\n';
+      std::cout << operation << std::endl;
+    }
 };
 
 int main()
 {
-	Expression my_expr(359, 489, '*');
-	my_expr.evalExpr();
-	return 0;
+  Expression my_expr(359, 489, '*');
+  my_expr.evalExpr();
+  return 0;
 }
