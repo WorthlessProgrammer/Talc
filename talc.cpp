@@ -1,25 +1,61 @@
 #include <iostream>
 #include <vector>
-#include <stdint.h>
 
 //8 + 8 => 16
+// Expression -> Operand, Operator
+// Operands -> Numbers, Expressions[(), f()]
+// Operator -> Binary, Unary
+
+enum Op {
+  Add = '+',
+  Sub = '-',
+  Mul = '*',
+  Div = '/'
+};
 
 class Expression
 {
 	private:
-		std::vector<int64_t> operands;
-		std::string operation;
+		std::vector<int> operands;
+		char operation;
 	
 	public:
-		Expression(int64_t op1, int64_t op2, std::string&& optr)
+		Expression(int op1, int op2, char optr)
 		{
 			operands.push_back(op1);
 			operands.push_back(op2);
 			operation = optr;
 		}
+
+    void evalExpr()
+    {
+      int result;
+
+      switch (operation) {
+        case Add:
+          result = operands[0] + operands[1];
+          break;
+        case Sub:
+          result = operands[0] - operands[1];
+          break;
+        case Mul:
+          result = operands[0] * operands[1];
+          break;
+        case Div:
+          result = operands[0] / operands[1];
+          break;  
+        default:
+          perror("ERROR: Invalid operator");
+          return;
+      }
+
+      std::cout << operands[0] << ' ' << operation << ' ' << operands[1] 
+                << " = " << result << std::endl; 
+    }
+
 		void print_t()
 		{
-			for (int64_t i: operands)
+			for (int i: operands)
 				std::cout << i << '\n';
 			std::cout << operation << std::endl;
 		}
@@ -27,7 +63,7 @@ class Expression
 
 int main()
 {
-	Expression my_expr(3, 4, "+");
-	my_expr.print_t();
+	Expression my_expr(359, 489, '*');
+	my_expr.evalExpr();
 	return 0;
 }
