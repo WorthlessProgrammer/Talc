@@ -2,10 +2,12 @@
 #include <bits/stdc++.h>
 #include <vector>
 
-//8 + 8 => 16
+// 8 + 8 => 16
 // Expression -> Operand, Operator
 // Operands -> Numbers, Expressions[(), f()]
 // Operator -> Binary, Unary
+
+//TODO: Parse multiple operations and define priority queue  
 
 enum Op {
   Add = '+',
@@ -18,6 +20,12 @@ enum TokenKind {
   Operand,
   Operation
 };
+
+bool is_number(const std::string& s)
+{
+    return !s.empty() && std::find_if(s.begin(), 
+            s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
+}
 
 class Expression
 {
@@ -32,6 +40,43 @@ class Expression
       operands.push_back(op2);
       operation = optr;
     }
+
+    Expression(std::string& expr) 
+    {
+      std::string temp;
+      std::vector<std::string> tokens;
+
+      std::stringstream strm_expr(expr);
+
+      while (getline(strm_expr, temp, ' ')) {
+        tokens.push_back(temp);
+      }
+
+      for (std::string token: tokens) { 
+        if (is_number(token)) {
+          operands.push_back(std::atoi(token.c_str()));
+          continue;
+        }
+        switch (token[0]) {
+          case Add:
+            operation = '+';
+            break;
+          case Sub:
+            operation = '-';
+            break;
+          case Mul:
+            operation = '*';
+            break;
+          case Div:
+            operation = '/';
+            break;  
+          default:
+            //TODO: Report Operand error
+            perror("ERROR: Invalid operator");
+            return;
+        } 
+      }
+    } 
 
     void evalExpr()
     {
@@ -67,34 +112,14 @@ class Expression
     }
 };
 
-bool is_number(const std::string& s)
-{
-    return !s.empty() && std::find_if(s.begin(), 
-            s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
-}
-
-void exprParser(std::string& expr)  
-{
-  std::string temp;
-  //std::vector<std::string> tokens;
-
-  std::stringstream strm_expr(expr);
-
-  while (getline(strm_expr, temp, ' ')) {
-    if (is_number(temp)) {
-      std::cout << temp << '\n';
-    } else if (temp[0] == '+'
-              || temp[0] == '-') {
-      std::cout << temp << '\n';
-    } 
-  }
-
-}
-
 int main()
 {
-  std::string a = "98   +   8   -  56";
-  exprParser(a); 
+  std::string a = "98 + 8 + 5 - 5 / 8";
+  std::string b = "98 - 8";
+  std::string c = "98 / 8";
+  
+  Expression my_expr(c);
+  my_expr.evalExpr();
 }
 
 int main2()
