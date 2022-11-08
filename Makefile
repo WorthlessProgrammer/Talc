@@ -1,7 +1,7 @@
 NAME=talc
 OUT=NAME 
 CC=g++ 
-FLAGS=-Wall -Wextra -std=c++11
+FLAGS=-Wall -Wextra -std=c++20
 LINKS=-lm
 
 $(NAME):
